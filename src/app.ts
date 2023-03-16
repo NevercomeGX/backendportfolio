@@ -7,7 +7,6 @@ import morgan from 'morgan';
 import passport from 'passport';
 import swaggerUi from 'swagger-ui-express';
 import router from './atoms';
-import { translation, setZodErrors, parseQueryPrimitives } from './middleware';
 import { secrets } from './utils';
 import { errorHandler } from './utils/errors';
 import * as strategies from './utils/auth';
@@ -21,7 +20,7 @@ const app: Application = express();
 app.use(
   cors({
     credentials: true,
-    origin: CLIENT_ORIGIN,
+    origin: 'http://localhost:3000',
   })
 );
 
@@ -37,9 +36,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Parse incoming requests cookies
 app.use(cookieParser(secrets.SECRET_KEY));
-
-// Convert req.query fields into their appropriate type
-app.use(parseQueryPrimitives());
 
 // Logging
 const format =
@@ -59,13 +55,6 @@ if (secrets.ENVIRONMENT === 'development') {
   app.get('/docs', swaggerUi.setup(specs));
 }
 
-// Zod set error map middleware
-app.use(setZodErrors());
-
-// Set translation function
-app.use(translation);
-
-// Routers
 app.use(router);
 
 // Error handler

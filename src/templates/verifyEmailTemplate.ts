@@ -1,4 +1,4 @@
-const verifyEmail = function (otp: string) {
+function verifyEmail(otp: string) {
   const html = `
     <!DOCTYPE html>
 <html
@@ -212,16 +212,16 @@ const verifyEmail = function (otp: string) {
                         </p>
 
                         <p style="margin: 10px 0 24px">
-                          I am writing to confirm the receipt of your email and the information you have provided. Thank you for taking the time to reach out to us.
+                          I am writing to confirm the receipt of your email and the information you have provided. Thank you for taking the time to reach out to me.
                         </p>
 
                         <p style="margin: 10px 0 24px">
-                          We will be in touch shortly to address your concerns and offer you the appropriate solution for your needs. Your patience is appreciated as we review your request.
+                          I will be in touch shortly to address your concerns and offer you the appropriate solution for your needs. Your patience is appreciated as we review your request.
                         </p>
 
                         
                         <p style="margin: 10px 0 24px">
-                          Thank you for your trust, and we look forward to serving you soon.
+                          Thank you for your trust, and I look forward to serving you soon.
                         </p>
 
                         <p style="margin: -10p 0 24px">
@@ -240,7 +240,7 @@ const verifyEmail = function (otp: string) {
                             color: #fff;
                             text-decoration: none;
                           "
-                          </lable
+                      
                         >
                         <table
                           style="font-family: 'Montserrat', Arial, sans-serif"
@@ -343,9 +343,9 @@ const verifyEmail = function (otp: string) {
         Verify Email, A request to create your node-typescript-boilerplate account was received.
         Use this OTP to confirm your account and log in`;
   return {
-    html: html,
-    text: text,
+    html,
+    text,
   };
-};
+}
 
 export default verifyEmail;

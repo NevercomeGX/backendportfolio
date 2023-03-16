@@ -3,10 +3,10 @@ import * as schemas from './schemas';
 
 export interface EmailsShape {
   id: string;
-	name: string;
-	lastName: string;
-	email: string;
-	country: string;
+  name: string;
+  lastName: string;
+  email: string;
+  country: string;
 }
 
 export type QuerySchema = z.infer<typeof schemas.query>;

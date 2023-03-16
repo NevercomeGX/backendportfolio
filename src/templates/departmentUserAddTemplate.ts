@@ -1,4 +1,8 @@
-const departmentUserAdd = function (resetPasswordUrl, firstName, departmentName) {
+function departmentUserAdd(
+  resetPasswordUrl: string,
+  firstName: string,
+  departmentName: string
+) {
   const html = `
     <!DOCTYPE html>
 <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -162,9 +166,9 @@ const departmentUserAdd = function (resetPasswordUrl, firstName, departmentName)
 
 If you did not requested a password reset, please ignore this email or reply to let us know. This password reset is only valid for the next 2 hours.`;
   return {
-    html: html,
-    text: text,
+    html,
+    text,
   };
-};
+}
 
 export default departmentUserAdd;
