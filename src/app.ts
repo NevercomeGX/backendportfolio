@@ -4,12 +4,10 @@ import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import passport from 'passport';
 import swaggerUi from 'swagger-ui-express';
 import router from './atoms';
 import { secrets } from './utils';
 import { errorHandler } from './utils/errors';
-import * as strategies from './utils/auth';
 import { CLIENT_ORIGIN } from './utils/secrets';
 import specs from '../openapi.json';
 
@@ -20,7 +18,7 @@ const app: Application = express();
 app.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:3000',
+    origin: CLIENT_ORIGIN,
   })
 );
 
@@ -43,11 +41,6 @@ const format =
     ? 'dev'
     : '[:date[clf]] :method :url :status :res[content-length] - :response-time ms';
 app.use(morgan(format));
-
-// Authentication
-app.use(passport.initialize());
-passport.use('jwt', strategies.jwtStrategy);
-passport.use('jwt-tolerant', strategies.jwtStrategyTolerant);
 
 // OpenAPI docs
 if (secrets.ENVIRONMENT === 'development') {

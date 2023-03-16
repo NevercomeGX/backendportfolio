@@ -8,7 +8,7 @@ export const list: Handler = async (req, res) => {
   // Validate query
   const query = schemas.query.parse(req.query);
 
-  // Get all emailss
+  // Get all emails
   const data = await services.findMany(query);
 
   // Response
@@ -31,7 +31,7 @@ export const create: Handler = async (req, res) => {
   const emails = await services.create(data);
   // Call mailservice
 
-  sendConfirmationEmail(transporter, data.name, data.email, data.lastName);
+  sendConfirmationEmail(transporter, data.name, data.email, data.message);
 
   // Response
   return res.status(201).json(emails);

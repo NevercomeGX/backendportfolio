@@ -11,7 +11,7 @@ interface EmailInfo {
 
 function sendConfirmationEmail(
   transporter: any,
-  lastName: string,
+  message: string,
   email: string,
   name: string
 ): Promise<unknown> {

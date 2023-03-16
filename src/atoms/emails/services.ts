@@ -1,14 +1,14 @@
 import { Prisma, Emails } from '@prisma/client';
-import type { EmailsShape, CreateSchema, UpdateSchema, QuerySchema } from './types';
+import type { emailshape, CreateSchema, UpdateSchema, QuerySchema } from './types';
 import prisma from '../../prisma';
 import { getPagination } from '../../utils/helpers';
 import { PaginatedResponse } from '../../types';
 
-export function shape(emails: Emails): EmailsShape {
+export function shape(emails: Emails): emailshape {
   return { ...emails };
 }
 
-export function shapeNullable(emails: Emails | null): EmailsShape | null {
+export function shapeNullable(emails: Emails | null): emailshape | null {
   return emails ? shape(emails) : null;
 }
 
@@ -18,7 +18,7 @@ export async function _getEmailsById(id: string): Promise<Emails | null> {
   return emails;
 }
 
-export async function findEmailsById(id: string): Promise<EmailsShape | null> {
+export async function findEmailsById(id: string): Promise<emailshape | null> {
   const emails = await prisma.emails.findUnique({ where: { id } });
 
   return shapeNullable(emails);
@@ -26,33 +26,30 @@ export async function findEmailsById(id: string): Promise<EmailsShape | null> {
 
 export async function findMany(
   query: QuerySchema
-): Promise<PaginatedResponse<EmailsShape>> {
+): Promise<PaginatedResponse<emailshape>> {
   const where: Prisma.EmailsWhereInput = {};
 
   const count = await prisma.emails.count({ where });
   const { offset, info } = getPagination(count, query);
 
-  const emailss = await prisma.emails.findMany({
+  const emails = await prisma.emails.findMany({
     ...offset,
     where,
   });
 
   return {
     ...info,
-    data: emailss.map(shape),
+    data: emails.map(shape),
   };
 }
 
-export async function create(data: CreateSchema): Promise<EmailsShape> {
+export async function create(data: CreateSchema): Promise<emailshape> {
   const emails = await prisma.emails.create({ data });
 
   return shape(emails);
 }
 
-export async function update(
-  id: string,
-  data: UpdateSchema
-): Promise<EmailsShape | null> {
+export async function update(id: string, data: UpdateSchema): Promise<emailshape | null> {
   const emails = await prisma.emails.update({ where: { id }, data });
 
   return shapeNullable(emails);

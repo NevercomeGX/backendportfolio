@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { paginationFields } from '../../utils/zod';
+import { paginationFields } from '../../../src/utils/zod';
 
 export const query = z.object({
   ...paginationFields,

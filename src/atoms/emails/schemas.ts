@@ -7,9 +7,8 @@ export const query = z.object({
 
 export const create = z.object({
   name: z.string(),
-  lastName: z.string(),
+  message: z.string(),
   email: z.string(),
-  country: z.string(),
 });
 
 export const update = create.partial();

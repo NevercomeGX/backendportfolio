@@ -1,10 +1,8 @@
 import { Router } from 'express';
-import users from './users';
-import emailss from './emailss';
+import emails from './emails';
 
 const router = Router();
 
-router.use('/users', users);
-router.use('/emailss', emailss);
+router.use('/emails', emails);
 
 export default router;

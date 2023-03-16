@@ -1,12 +1,11 @@
 import { z } from 'zod';
 import * as schemas from './schemas';
 
-export interface EmailsShape {
+export interface emailshape {
   id: string;
   name: string;
-  lastName: string;
+  message: string;
   email: string;
-  country: string;
 }
 
 export type QuerySchema = z.infer<typeof schemas.query>;

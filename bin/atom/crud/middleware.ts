@@ -1,8 +1,17 @@
-import type { Handler } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import { SimpleError } from '../../../src/utils/errors';
 import * as services from './services';
-import { SimpleError } from '../../utils/errors';
 
-export const getObject: Handler = async (req, res, next) => {
+interface ObjectRequest extends Request {
+  object?: any;
+  t?: any;
+}
+
+export const getObject = async (
+  req: ObjectRequest,
+  res: Response,
+  next: NextFunction
+) => {
   const _object = await services._get_ObjectById(req.params.id);
 
   // Ownership validation should be here
