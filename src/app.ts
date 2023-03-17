@@ -15,6 +15,7 @@ import specs from '../openapi.json';
 const app: Application = express();
 
 // CORS (Cross Origin Resource Sharing)
+console.log(CLIENT_ORIGIN);
 app.use(
   cors({
     credentials: true,
