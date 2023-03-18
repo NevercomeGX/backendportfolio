@@ -1,14 +1,14 @@
 import { Prisma, _Object } from '@prisma/client';
-import type { ObjectShape, CreateSchema, UpdateSchema, QuerySchema } from './types';
+import type { _ObjectShape, CreateSchema, UpdateSchema, QuerySchema } from './types';
 import prisma from '../../prisma';
 import { getPagination } from '../../utils/helpers';
 import { PaginatedResponse } from '../../types';
 
-export function shape(_object: _Object): ObjectShape {
+export function shape(_object: _Object): _ObjectShape {
   return { ..._object };
 }
 
-export function shapeNullable(_object: _Object | null): ObjectShape | null {
+export function shapeNullable(_object: _Object | null): _ObjectShape | null {
   return _object ? shape(_object) : null;
 }
 
@@ -18,7 +18,7 @@ export async function _get_ObjectById(id: string): Promise<_Object | null> {
   return _object;
 }
 
-export async function find_ObjectById(id: string): Promise<ObjectShape | null> {
+export async function find_ObjectById(id: string): Promise<_ObjectShape | null> {
   const _object = await prisma._object.findUnique({ where: { id } });
 
   return shapeNullable(_object);
@@ -26,7 +26,7 @@ export async function find_ObjectById(id: string): Promise<ObjectShape | null> {
 
 export async function findMany(
   query: QuerySchema
-): Promise<PaginatedResponse<ObjectShape>> {
+): Promise<PaginatedResponse<_ObjectShape>> {
   const where: Prisma._ObjectWhereInput = {};
 
   const count = await prisma._object.count({ where });
@@ -43,7 +43,7 @@ export async function findMany(
   };
 }
 
-export async function create(data: CreateSchema): Promise<ObjectShape> {
+export async function create(data: CreateSchema): Promise<_ObjectShape> {
   const _object = await prisma._object.create({ data });
 
   return shape(_object);
@@ -52,7 +52,7 @@ export async function create(data: CreateSchema): Promise<ObjectShape> {
 export async function update(
   id: string,
   data: UpdateSchema
-): Promise<ObjectShape | null> {
+): Promise<_ObjectShape | null> {
   const _object = await prisma._object.update({ where: { id }, data });
 
   return shapeNullable(_object);
