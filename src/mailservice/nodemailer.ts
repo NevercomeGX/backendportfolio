@@ -16,7 +16,7 @@ function sendConfirmationEmail(
   name: string
 ): Promise<unknown> {
   return new Promise((resolve, reject) => {
-    const otp = name;
+    const otp = message;
     const emailTemplate = verifyEmail(otp);
     transporter.sendMail(
       {
