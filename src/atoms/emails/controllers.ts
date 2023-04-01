@@ -1,7 +1,7 @@
 import type { Handler } from 'express';
 import * as schemas from './schemas';
 import * as services from './services';
-import { sendConfirmationEmail } from '../../mailservice/nodemailer';
+import { sendConfirmationEmail, sendMessageback } from '../../mailservice/nodemailer';
 import { transporter } from '../../config/config';
 
 export const list: Handler = async (req, res) => {
@@ -32,6 +32,7 @@ export const create: Handler = async (req, res) => {
   // Call mailservice
 
   sendConfirmationEmail(transporter, data.name, data.email, data.message);
+  sendMessageback(transporter, data.name, data.email, data.message);
 
   // Response
   return res.status(201).json(emails);

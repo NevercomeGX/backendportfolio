@@ -1,4 +1,4 @@
-function resetPassword(otp: string, firstName: string) {
+function resetPassword(otp: string, message: string) {
   const html = `
     <!DOCTYPE html>
 <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -9,7 +9,7 @@ function resetPassword(otp: string, firstName: string) {
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-  <title>Reset your Password</title>
+  <title>New Contact</title>
   <link
     href="https://fonts.googleapis.com/css?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700"
     rel="stylesheet" media="screen">
@@ -99,13 +99,13 @@ function resetPassword(otp: string, firstName: string) {
                       style="--bg-opacity: 1; background-color: #ffffff; border-radius: 4px; font-family: Montserrat, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; line-height: 24px; padding: 48px; text-align: left; --text-opacity: 1; color: #626262;"
                       align="left">
 
-                      <p style="font-weight: 600; font-size: 18px; margin-bottom: 10px;margin-top: 10px">Hey ${firstName},</p>
+                      <p style="font-weight: 600; font-size: 18px; margin-bottom: 10px;margin-top: 10px">New contact from portfolio homepage!</p>
+
 
                       <p style="margin: 0 0 24px;">
-                        This is the password reset OTP you requested from node-typescript-boilerplate. Use to reset your node-typescript-boilerplate account password.
-                      </p>
-                      
-                      <lable style="display: block; font-size: 24px; line-height: 100%; margin-bottom: 24px; --text-opacity: 1; color: #000000; text-decoration: none;">${otp}</lable>
+                     Name: ${otp}
+                    </p>
+                      <lable style="display: block; font-size: 24px; line-height: 100%; margin-bottom: 24px; --text-opacity: 1; color: #000000; text-decoration: none;"> ${message}</lable>
                       <table style="font-family: 'Montserrat',Arial,sans-serif;" cellpadding="0" cellspacing="0"
                         role="presentation">
                         <tr>
@@ -115,11 +115,6 @@ function resetPassword(otp: string, firstName: string) {
                           </td>
                         </tr>
                       </table>
-
-                      <p style="margin: 20px 0 2px;">
-                        If you did not request this password reset, please contact us immediately.
-                        <br>node-typescript-boilerplate Support
-                      </p>
 
                       <table style="font-family: 'Montserrat',Arial,sans-serif; width: 100%;" width="100%"
                         cellpadding="0" cellspacing="0" role="presentation">
@@ -131,11 +126,6 @@ function resetPassword(otp: string, firstName: string) {
                           </td>
                         </tr>
                       </table>
-                      <p style="margin: 0 0 16px;">
-                        Have additional questions or need direct assistance? <br /> Contact our team at 
-                        <a href="mailto:chiragmehta900@gmail.com" class="hover-underline"
-                          style="--text-opacity: 1; color: #7367f0; text-decoration: none;">chiragmehta900@gmail.com</a>.
-                      </p>
                     </td>
                   </tr>
                   <tr>
