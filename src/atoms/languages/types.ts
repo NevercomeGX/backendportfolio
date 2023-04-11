@@ -2,9 +2,9 @@ import { z } from 'zod';
 import * as schemas from './schemas';
 
 export interface LanguageShape {
-  id: string;
-  name: string;
-  image: string;
+  id: number;
+  lenguague: string;
+  languageImageUrl: string;
 }
 
 export type QuerySchema = z.infer<typeof schemas.query>;

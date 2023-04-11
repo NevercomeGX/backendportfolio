@@ -1,25 +1,31 @@
-import { Prisma, Project } from '@prisma/client';
+import { Prisma, Projects, Languages } from '@prisma/client';
 import type { ProjectShape, CreateSchema, UpdateSchema, QuerySchema } from './types';
 import prisma from '../../prisma';
 import { getPagination } from '../../utils/helpers';
 import { PaginatedResponse } from '../../types';
 
-export function shape(project: Project): ProjectShape {
+export function shape(project: Projects): ProjectShape {
   return { ...project };
 }
 
-export function shapeNullable(project: Project | null): ProjectShape | null {
+export function shapeNullable(project: Projects | null): ProjectShape | null {
   return project ? shape(project) : null;
 }
 
-export async function _getProjectById(id: string): Promise<Project | null> {
-  const project = await prisma.project.findUnique({ where: { id } });
+export async function _getProjectById(id: number): Promise<Projects | null> {
+  const project = await prisma.projects.findUnique({
+    where: { id },
+    include: { language: true }, // include the related language
+  });
 
   return project;
 }
 
-export async function findProjectById(id: string): Promise<ProjectShape | null> {
-  const project = await prisma.project.findUnique({ where: { id } });
+export async function findProjectById(id: number): Promise<ProjectShape | null> {
+  const project = await prisma.projects.findUnique({
+    where: { id },
+    include: { language: true },
+  });
 
   return shapeNullable(project);
 }
@@ -27,12 +33,12 @@ export async function findProjectById(id: string): Promise<ProjectShape | null> 
 export async function findMany(
   query: QuerySchema
 ): Promise<PaginatedResponse<ProjectShape>> {
-  const where: Prisma.ProjectWhereInput = {};
+  const where: Prisma.ProjectsWhereInput = {};
 
-  const count = await prisma.project.count({ where });
+  const count = await prisma.projects.count({ where });
   const { offset, info } = getPagination(count, query);
 
-  const projects = await prisma.project.findMany({
+  const projects = await prisma.projects.findMany({
     ...offset,
     where,
   });
@@ -44,20 +50,20 @@ export async function findMany(
 }
 
 export async function create(data: CreateSchema): Promise<ProjectShape> {
-  const project = await prisma.project.create({ data });
+  const project = await prisma.projects.create({ data });
 
   return shape(project);
 }
 
 export async function update(
-  id: string,
+  id: number,
   data: UpdateSchema
 ): Promise<ProjectShape | null> {
-  const project = await prisma.project.update({ where: { id }, data });
+  const project = await prisma.projects.update({ where: { id }, data });
 
   return shapeNullable(project);
 }
 
-export async function destroy(id: string): Promise<void> {
-  await prisma.project.delete({ where: { id } });
+export async function destroy(id: number): Promise<void> {
+  await prisma.projects.delete({ where: { id } });
 }

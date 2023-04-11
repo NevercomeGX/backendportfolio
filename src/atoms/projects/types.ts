@@ -2,10 +2,10 @@ import { z } from 'zod';
 import * as schemas from './schemas';
 
 export interface ProjectShape {
-  id: string;
+  id: number;
   title: string;
   description: string;
-  imageUrl: string;
+  projectImageUrl: string;
 }
 
 export type QuerySchema = z.infer<typeof schemas.query>;
