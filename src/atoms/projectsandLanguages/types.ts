@@ -1,10 +1,10 @@
 import { z } from 'zod';
 import * as schemas from './schemas';
 
-export interface LanguageShape {
-  id: number;
-  language: string;
-  languageImageUrl: string;
+export interface ProjectsandLanguageShape {
+  projectId: number;
+  languageId: number;
+  assignedBy: string;
 }
 
 export type QuerySchema = z.infer<typeof schemas.query>;

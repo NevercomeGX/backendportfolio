@@ -15,7 +15,6 @@ export function shapeNullable(project: Projects | null): ProjectShape | null {
 export async function _getProjectById(id: number): Promise<Projects | null> {
   const project = await prisma.projects.findUnique({
     where: { id },
-    include: { language: true }, // include the related language
   });
 
   return project;
@@ -24,7 +23,6 @@ export async function _getProjectById(id: number): Promise<Projects | null> {
 export async function findProjectById(id: number): Promise<ProjectShape | null> {
   const project = await prisma.projects.findUnique({
     where: { id },
-    include: { language: true },
   });
 
   return shapeNullable(project);

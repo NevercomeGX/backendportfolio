@@ -6,8 +6,9 @@ export const query = z.object({
 });
 
 export const create = z.object({
-  language: z.string(),
-  languageImageUrl: z.string(),
+  projectId: z.number(),
+  languageId: z.number(),
+  assignedBy: z.string(),
 });
 
 export const update = create.partial();
