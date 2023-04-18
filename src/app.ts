@@ -2,17 +2,19 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
-import helmet from 'helmet';
+// import helmet from 'helmet';
 import morgan from 'morgan';
 import passport from 'passport';
 import swaggerUi from 'swagger-ui-express';
-import router from './atoms';
+import * as trpcExpress from "@trpc/server/adapters/express";
+import router  from './atoms';
 import { translation, setZodErrors, parseQueryPrimitives } from './middleware';
 import { secrets } from './utils';
 import { errorHandler } from './utils/errors';
 import * as strategies from './utils/auth';
 import { CLIENT_ORIGIN } from './utils/secrets';
 import specs from '../openapi.json';
+import { trpcRouter } from './atoms/trpc';
 
 // Initialize the application
 const app: Application = express();
@@ -21,18 +23,20 @@ const app: Application = express();
 app.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:3000',
+    origin: CLIENT_ORIGIN,
   })
 );
 
 // Security headers
-app.use(helmet());
+// app.use(helmet());
 
 // Compress the response
 app.use(compression());
 
 // Parse incoming requests with JSON payload
 app.use(express.json());
+
+// Parse incoming requests with URL-encoded payload
 app.use(express.urlencoded({ extended: true }));
 
 // Parse incoming requests cookies
@@ -66,9 +70,22 @@ app.use(setZodErrors());
 app.use(translation);
 
 // Routers
-app.use(router);
+app.use('/', router);
 
 // Error handler
 app.use(errorHandler);
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    credentials: true,
+  })
+);
+app.use(
+  "/trpc",
+  trpcExpress.createExpressMiddleware({
+    router: trpcRouter,
+  })
+);
 
 export default app;

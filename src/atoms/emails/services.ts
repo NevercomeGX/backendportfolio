@@ -4,10 +4,9 @@ import prisma from '../../prisma';
 import { getPagination } from '../../utils/helpers';
 import { PaginatedResponse } from '../../types';
 
-export function shape(emails: Emails): emailshape {
-  return { ...emails };
+export function shape({ id, name, message, email }: Emails): emailshape {
+  return { id, name, message, email };
 }
-
 export function shapeNullable(emails: Emails | null): emailshape | null {
   return emails ? shape(emails) : null;
 }
@@ -29,21 +28,29 @@ export async function findMany(
 ): Promise<PaginatedResponse<emailshape>> {
   const where: Prisma.EmailsWhereInput = {};
 
-  const count = await prisma.emails.count({ where });
-  const { offset, info } = getPagination(count, query);
+  try {
+    const count = await prisma.emails.count({ where });
+    const { offset, info } = getPagination(count, query);
 
-  const emails = await prisma.emails.findMany({
-    ...offset,
-    where,
-  });
+    const emails = await prisma.emails.findMany({
+      ...offset,
+      where,
+    });
 
-  return {
-    ...info,
-    data: emails.map(shape),
-  };
+    return {
+      ...info,
+      data: emails.map(shape),
+    };
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to fetch emails');
+  }
 }
-
 export async function create(data: CreateSchema): Promise<emailshape> {
+  if (!data.name || !data.message || !data.email) {
+    throw new Error('Invalid input data');
+  }
+
   const emails = await prisma.emails.create({ data });
 
   return shape(emails);
